@@ -2,3 +2,4 @@ pytesseract
 cv2
 numpy
 streamlit
+opencv-python-headless
