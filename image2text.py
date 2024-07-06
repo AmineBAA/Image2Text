@@ -1,20 +1,12 @@
-import pytesseract
-import cv2
 import streamlit as st
 from PIL import Image
-import numpy as np
+import easyocr
 
+# Function to extract text from image using easyocr
 def extract_text_from_image(image):
-    # Convert the image to a NumPy array
-    image = np.array(image)
-
-    # Convert the image to grayscale
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    # Use Tesseract to extract text
-    extracted_text = pytesseract.image_to_string(gray_image)
-
-    return extracted_text
+    reader = easyocr.Reader(['en'])
+    result = reader.readtext(image, detail=0)
+    return result
 
 def main():
     st.title("Form Information Display")
@@ -30,7 +22,7 @@ def main():
         form_text = extract_text_from_image(image)
         
         st.header("Extracted Information")
-        st.text(form_text)
+        st.text("\n".join(form_text))
 
 if __name__ == "__main__":
     main()
