@@ -5,7 +5,7 @@ import numpy as np
 
 @st.cache_resource
 def load_easyocr_reader():
-    return easyocr.Reader(['en'])
+    return easyocr.Reader(['en'], verbose=False)
 
 def extract_text_from_image(image):
     reader = load_easyocr_reader()
