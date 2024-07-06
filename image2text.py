@@ -1,17 +1,17 @@
 import streamlit as st
 from PIL import Image
 import easyocr
+import numpy as np
 
-# Function to extract text from image using easyocr
+@st.cache_resource
+def load_easyocr_reader():
+    return easyocr.Reader(['en'])
+
 def extract_text_from_image(image):
-    try:
-        # Create easyocr Reader object
-        reader = easyocr.Reader(['en'])
-        # Convert image to numpy array and read text
-        result = reader.readtext(image, detail=0)
-        return result
-    except Exception as e:
-        return [str(e)]
+    reader = load_easyocr_reader()
+    image_np = np.array(image)
+    result = reader.readtext(image_np, detail=0)
+    return result
 
 def main():
     st.title("Form Information Display")
